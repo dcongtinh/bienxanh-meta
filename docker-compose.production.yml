@@ -17,7 +17,7 @@ services:
                 - NODE_ENV=production
         command: /bin/bash -c "yarn run start"
         ports:
-            - '80:4000'
+            - '4000:4000'
         environment:
             - MONGO_URL=mongodb://admin:happy2code@mongo:27017/bienxanh?authSource=admin
         volumes:
@@ -32,7 +32,7 @@ services:
                 - NODE_ENV=production
         command: /bin/bash -c "yarn run production -l 3000"
         ports:
-            - '80:3000'
+            - '3000:3000'
         volumes:
             - ./bienxanh:/opt/app
             - web:/opt/app/node_modules
