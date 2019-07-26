@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "bienxanh-api": "git@github.com:dcongtinh/bienxanh-api.git",
+    "bienxanh": "git@github.com:dcongtinh/bienxanh.git"
+  }
+}

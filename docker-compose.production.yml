@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+    mongo:
+        image: 'mongo'
+        ports:
+            - '27020:27017'
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: happy2code
+        volumes:
+            - ./data/mongo:/data/db
+        command: --auth
+    api:
+        build:
+            context: ./bienxanh-api
+            args:
+                - NODE_ENV=production
+        command: /bin/bash -c "yarn run start"
+        ports:
+            - '80:4000'
+        environment:
+            - MONGO_URL=mongodb://admin:happy2code@mongo:27017/bienxanh?authSource=admin
+        volumes:
+            - ./bienxanh-api:/opt/app
+            - api:/opt/app/node_modules
+        depends_on:
+            - mongo
+    web:
+        build:
+            context: ./bienxanh
+            args:
+                - NODE_ENV=production
+        command: /bin/bash -c "yarn run production -l 3000"
+        ports:
+            - '80:3000'
+        volumes:
+            - ./bienxanh:/opt/app
+            - web:/opt/app/node_modules
+        depends_on:
+            - mongo
+            - api
+
+volumes:
+    api:
+    web:
