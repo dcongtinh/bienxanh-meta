@@ -21,7 +21,9 @@ services:
         environment:
             - MONGO_URL=mongodb://admin:happy2code@mongo:27017/bienxanh?authSource=admin
         volumes:
-            - ./bienxanh-api:/opt/app
+            - ./bienxanh-api:/opt/app:delegated
+            - ./bienxanh-api/package.json:/opt/package.json
+            - ./bienxanh-api/yarn.lock:/opt/yarn.lock
             - api:/opt/app/node_modules
         depends_on:
             - mongo
@@ -33,13 +35,12 @@ services:
         command: /bin/bash -c "yarn run start"
         ports:
             - '3000:3000'
-        # environment:
-        # - REACT_APP_API_URL=http://api:4000
         volumes:
-            - ./bienxanh:/opt/app
-            - web:/opt/app/node_modules
+            - ./bienxanh:/opt/app:delegated
+            - ./bienxanh/package.json:/opt/package.json
+            - ./bienxanh/yarn.lock:/opt/yarn.lock
+            # - web:/opt/app/node_modules
         depends_on:
-            - mongo
             - api
 
 volumes:
