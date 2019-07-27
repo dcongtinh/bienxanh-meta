@@ -12,7 +12,7 @@ services:
         command: --auth
     api:
         build:
-            context: ./bienxanh-api
+            context: ./bienxanh-api/
             args:
                 - NODE_ENV=development
         command: /bin/bash -c "yarn run dev"
@@ -22,12 +22,12 @@ services:
             - MONGO_URL=mongodb://admin:happy2code@mongo:27017/bienxanh?authSource=admin
         volumes:
             - ./bienxanh-api:/opt/app
-            - api:/opt/app/node_modules
+            - /opt/app/node_modules
         depends_on:
             - mongo
     web:
         build:
-            context: ./bienxanh
+            context: ./bienxanh/
             args:
                 - NODE_ENV=development
         command: /bin/bash -c "yarn run start"
@@ -35,10 +35,6 @@ services:
             - '3000:3000'
         volumes:
             - ./bienxanh:/opt/app
-            - web:/opt/app/node_modules
+            - /opt/app/node_modules
         depends_on:
             - api
-
-volumes:
-    api:
-    web:
